@@ -9,19 +9,19 @@ import time
 
 # Define SSL context
 ssl_context = SSLContext(PROTOCOL_TLSv1_2)
-ssl_context.load_verify_locations('C:/Users/dell/Documents/CODE/PROGRAM/sf-class2-root.crt')  # Update this path
+ssl_context.load_verify_locations('path/to/sf-class2-root.crt')  # Update this path
 ssl_context.verify_mode = CERT_REQUIRED
 
 # Define authentication provider
-auth_provider = PlainTextAuthProvider(username='KEY1-at-975050380296', password='R0ZHCdj/PhGMGQCfN8OgluTgCE/qb763e6uNFfk6RoGD6+4FEEsa5n8uw9w=')
+auth_provider = PlainTextAuthProvider(username='your_username', password='your_password')
 
 # Connect to the cluster
-cluster = Cluster(['cassandra.ap-south-1.amazonaws.com'], ssl_context=ssl_context, auth_provider=auth_provider, port=9142)
-session = cluster.connect('testing')
+cluster = Cluster(['your_amazon_endpoint'], ssl_context=ssl_context, auth_provider=auth_provider, port=9142)
+session = cluster.connect('your_keyspace_name')
 
 # Prepare the insert statement
 insert_query = """
-INSERT INTO billing_data_singlephase_by_date_month_year(
+INSERT INTO your_table_name(
     billing_year, billing_month, billing_date, device_serial_number, billing_datetime,
     average_power_factor_for_billing_period, billing_power_off_duration_in_billing, billing_power_on_duration_in_billing,
     cumulative_energy_kvah_export, cumulative_energy_kvah_import, cumulative_energy_kvah_tier1, cumulative_energy_kvah_tier2,
@@ -51,7 +51,7 @@ def generate_random_data():
         random.uniform(0, 10000), random.uniform(0, 10000), random.uniform(0, 10000), random.uniform(0, 10000),
         random.uniform(0, 10000), random.uniform(0, 10000), random.uniform(0, 10000), random.uniform(0, 10000),
         random.uniform(0, 10000), random.uniform(0, 10000), random.uniform(0, 10000), random.uniform(0, 10000),
-        'DCU1234', 'DT_NAME', 'FEEDER_NAME', random.uniform(0, 10), billing_datetime, random.uniform(0, 10),
+        '', 'DT_NAME', 'FEEDER_NAME', random.uniform(0, 10), billing_datetime, random.uniform(0, 10),
         billing_datetime, datetime.now(), datetime.now(), 'OWNER_NAME', 'SUBDIVISION_NAME', 'SUBSTATION_NAME'
     )
     return data
